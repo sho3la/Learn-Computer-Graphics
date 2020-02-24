@@ -3,3 +3,4 @@ cmake_minimum_required(VERSION 3.9)
 project("Learn_Computer_Graphics")
 
 add_subdirectory(Tutorial_01)
+add_subdirectory(Tutorial_02)

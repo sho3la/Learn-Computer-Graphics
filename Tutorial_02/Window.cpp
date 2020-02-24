@@ -12,7 +12,7 @@ Window::Window(int width, int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window_ptr = glfwCreateWindow(width, height, "Tutorial_01",NULL,NULL);
+	window_ptr = glfwCreateWindow(width, height, "Tutorial_02",NULL,NULL);
 	if(window_ptr ==  nullptr)
 	{
 		cout<<"erorr initilize glfw"<<endl;
@@ -26,10 +26,38 @@ Window::Window(int width, int height)
 		cout<<"erorr initilize glew"<<endl;
 		return;
 	}
+
+
+	const char* vs = R"CODE(
+			#version 330 core
+			layout(location = 0) in vec2 point;
+			void main()
+			{
+				gl_Position = vec4(point.x, point.y, 0.0, 1.0);
+			};
+)CODE";
+	
+	const char* fs = R"CODE(
+
+			#version 330 core
+			out vec4 finalcolor;
+			void main()
+			{
+				finalcolor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
+			};
+)CODE";
+
+	shader = new ShaderProgram(vs,fs);
+
+	points_renderer = new Points();
+	points_renderer->Add(glm::vec2(0,0));
+	points_renderer->Add(glm::vec2(0.5,0));
+	points_renderer->Add(glm::vec2(0.5,0.5));
 }
 
 Window::~Window()
 {
+	delete points_renderer;
 	glfwTerminate();
 }
 
@@ -62,11 +90,12 @@ void Window::Mainloop()
 		Resize();
 		Input();
 
-		glClearColor(0.5f,0.8f,0.5f,1.0f);
+		glClearColor(0.0f,0.0f,0.0f,1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// all drawing goes here ..
-
+		shader->use();
+		points_renderer->Draw();
 
 		glfwSwapBuffers(window_ptr);
 		glfwPollEvents();

@@ -1,22 +1,27 @@
 cmake_minimum_required(VERSION 3.9)
 
-project("Tutorial_01")
+project("Tutorial_02")
 
 set(HEADER_FILES
 	Window.h
+	Points.h
+	ShaderProgram.h
 )
 
 set(SOURCE_FILES
 	main.cpp
+	
 	Window.cpp
+	Points.cpp
+	ShaderProgram.cpp
 )
 
-add_executable(tutorial_01
+add_executable(tutorial_02
 	${HEADER_FILES}
 	${SOURCE_FILES}
 )
 
-target_link_libraries(tutorial_01
+target_link_libraries(tutorial_02
 	PUBLIC
 		opengl32
 		glew32
@@ -26,42 +31,42 @@ target_link_libraries(tutorial_01
 if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
 
 	add_custom_command(
-    TARGET tutorial_01 POST_BUILD
+    TARGET tutorial_02 POST_BUILD
 	
 	COMMAND ${CMAKE_COMMAND} -E copy 
 	${CMAKE_SOURCE_DIR}/external/glew/bin/x64/glew32.dll
-	$<TARGET_FILE_DIR:tutorial_01>
+	$<TARGET_FILE_DIR:tutorial_02>
 )
 else("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
 
 add_custom_command(
-    TARGET tutorial_01 POST_BUILD
+    TARGET tutorial_02 POST_BUILD
 	
 	COMMAND ${CMAKE_COMMAND} -E copy 
 	${CMAKE_SOURCE_DIR}/external/glew/bin/Win32/glew32.dll
-	$<TARGET_FILE_DIR:tutorial_01>
+	$<TARGET_FILE_DIR:tutorial_02>
 )
 
 ENDIF()
 
 if(WIN32)
-	target_compile_definitions(tutorial_01
+	target_compile_definitions(tutorial_02
 		PRIVATE
 			OS_WINDOWS=1
 	)
-	target_compile_options(tutorial_01
+	target_compile_options(tutorial_02
 		PRIVATE
 			/WX
 	)
 endif(WIN32)
 
 
-target_compile_features(tutorial_01 PUBLIC cxx_std_17)
-set_target_properties(tutorial_01 PROPERTIES
+target_compile_features(tutorial_02 PUBLIC cxx_std_17)
+set_target_properties(tutorial_02 PROPERTIES
 	CXX_EXTENSIONS OFF
 )
 
-target_include_directories(tutorial_01
+target_include_directories(tutorial_02
 	PUBLIC
 	${CMAKE_SOURCE_DIR}/external/glew/include
 	${CMAKE_SOURCE_DIR}/external/glfw/include
@@ -70,14 +75,14 @@ target_include_directories(tutorial_01
 
 if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
 
-	target_link_directories (tutorial_01
+	target_link_directories (tutorial_02
 	PUBLIC
 	${CMAKE_SOURCE_DIR}/external/glew/lib/x64
     ${CMAKE_SOURCE_DIR}/external/glfw/lib/$<CONFIG>/x64lib/
 )	
 else("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
 
-	target_link_directories (tutorial_01
+	target_link_directories (tutorial_02
 	PUBLIC
 	${CMAKE_SOURCE_DIR}/external/glew/lib/Win32
 	${CMAKE_SOURCE_DIR}/external/glfw/lib/$<CONFIG>/win32lib/
