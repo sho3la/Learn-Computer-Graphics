@@ -40,3 +40,18 @@ void Texture::use()
 {
 	glBindTexture(GL_TEXTURE_2D, textureID);
 }
+
+int Texture::getwidth()
+{
+	return width;
+}
+
+int Texture::getheight()
+{
+	return height;
+}
+
+unsigned char * Texture::getdata()
+{
+	return data;
+}

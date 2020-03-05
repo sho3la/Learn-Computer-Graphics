@@ -9,6 +9,12 @@ public:
 
 	void use();
 
+	int getwidth();
+
+	int getheight();
+
+	unsigned char* getdata();
+
 private:
 	int width, height, numcomponents;
 	unsigned char* data;

@@ -2,6 +2,27 @@
 #include "Sprite.h"
 #include "ShaderProgram.h"
 
+#include <vector>
+using namespace std;
+
+
+enum Type
+{
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	SHOOT
+};
+
+struct Action
+{
+	Type _type;
+	std::pair<bool,char> iskey_pressed;
+	glm::vec2 mouse_pos;
+};
+
+
 class Game
 {
 public:
@@ -9,7 +30,7 @@ public:
 
 	~Game();
 
-	void input();
+	void input(vector<Action> actions);
 
 	void Draw(ShaderProgram* shader);
 
@@ -20,4 +41,8 @@ private:
 	Sprite* planet_mask;
 	Sprite* planet2;
 	Sprite* spaceship;
+	Sprite* enemy;
+
+	Texture* bullet;
+	vector<Rectangle*> bullets;
 };

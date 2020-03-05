@@ -34,4 +34,6 @@ private:
 	Camera* camera;
 
 	Game* game;
+	vector<Action> actions;
+	static int key_state;
 };

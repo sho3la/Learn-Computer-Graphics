@@ -21,6 +21,11 @@ Game::Game()
 	spaceship = new Sprite("resources/spaceship.png", glm::vec2(700,500));
 	spaceship->scale(glm::vec2(100));
 
+
+	enemy = new Sprite("resources/spaceship.png", glm::vec2(700,200));
+	enemy->scale(glm::vec2(50));
+
+	bullet = new Texture("resources/bullet.png");
 }
 
 Game::~Game()
@@ -33,8 +38,39 @@ Game::~Game()
 	delete spaceship;
 }
 
-void Game::input()
+void Game::input(vector<Action> actions)
 {
+	for (auto action : actions)
+	{
+		switch (action._type)
+		{
+			case MOVE_UP:
+				spaceship->move_up(5);
+				break;
+			case MOVE_DOWN:
+				spaceship->move_down(5);
+				break;
+			case MOVE_LEFT:
+				spaceship->move_left(5);
+				break;
+			case MOVE_RIGHT:
+				spaceship->move_right(5);
+				break;
+			case SHOOT:
+			{
+				//generate rectangles as bullets
+				Rectangle* rect = new Rectangle();
+				glm::vec2 pos = spaceship->getposition();
+				pos += 40;
+				rect->setposition(pos);
+				rect->setscale(glm::vec2(20,40));
+				bullets.push_back(rect);
+			}
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void Game::Draw(ShaderProgram* shader)
@@ -57,4 +93,27 @@ void Game::Draw(ShaderProgram* shader)
 
 	shader->Send_Mat4("model_matrx", spaceship->transformation());
 	spaceship->draw();
+
+
+	shader->Send_Mat4("model_matrx", enemy->transformation());
+	enemy->draw();
+
+	bullet->use();
+	for(size_t i =0; i < bullets.size(); ++i)
+	{
+		auto tmp = bullets[i]->getposition();
+		if(tmp.y < -10)
+		{
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
+			continue;
+		}
+
+		tmp.y -= 10;
+		bullets[i]->setposition(tmp);
+
+
+		shader->Send_Mat4("model_matrx", bullets[i]->GetTransformationMatrx());
+		bullets[i]->Draw();
+	}
 }

@@ -19,6 +19,7 @@ public:
 	void move_right(float speed);
 
 	void scale(glm::vec2 _scale);
+	glm::vec2 getposition();
 
 
 private:

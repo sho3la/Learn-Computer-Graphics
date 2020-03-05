@@ -1,5 +1,8 @@
 #include "Window.h"
 
+
+int Window::key_state = GLFW_RELEASE;
+
 Window::Window(int width, int height)
 	:m_width(width),
 	m_height(height)
@@ -11,6 +14,7 @@ Window::Window(int width, int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_MAXIMIZED,true);
 
 	window_ptr = glfwCreateWindow(width, height, "Tutorial_09",NULL,NULL);
 	if(window_ptr ==  nullptr)
@@ -21,6 +25,10 @@ Window::Window(int width, int height)
 
 	glfwMakeContextCurrent(window_ptr);
 
+
+	//const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	//glfwSetWindowMonitor( window_ptr, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, 0 );
+
 	if(glewInit())
 	{
 		cout<<"erorr initilize glew"<<endl;
@@ -29,6 +37,16 @@ Window::Window(int width, int height)
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+
+	Texture* ic = new Texture("resources/spaceship.png");
+	GLFWimage image;
+	image.height = ic->getheight();
+	image.width = ic->getwidth();
+	image.pixels = ic->getdata();
+	glfwSetWindowIcon(window_ptr,1,&image);
+	delete ic;
 
 
 	const char* vs = R"CODE(
@@ -82,7 +100,6 @@ Window::~Window()
 	glfwTerminate();
 }
 
-static glm::vec2 pos = glm::vec2(200,250);
 void Window::Input()
 {
 	if(glfwGetKey(window_ptr,GLFW_KEY_ESCAPE))
@@ -93,23 +110,42 @@ void Window::Input()
 
 	if(glfwGetKey(window_ptr,GLFW_KEY_UP))
 	{
-		
+		Action ac;
+		ac._type = MOVE_UP;
+		actions.push_back(ac);
 	}
 	
 	if(glfwGetKey(window_ptr,GLFW_KEY_DOWN))
 	{
-
+		Action ac;
+		ac._type = MOVE_DOWN;
+		actions.push_back(ac);
 	}
 
 	if(glfwGetKey(window_ptr,GLFW_KEY_LEFT))
 	{
-
+		Action ac;
+		ac._type = MOVE_LEFT;
+		actions.push_back(ac);
 	}
 
 	if(glfwGetKey(window_ptr,GLFW_KEY_RIGHT))
 	{
-
+		Action ac;
+		ac._type = MOVE_RIGHT;
+		actions.push_back(ac);
 	}
+
+	int newstate = glfwGetKey(window_ptr,GLFW_KEY_SPACE);
+	if(newstate == GLFW_RELEASE && key_state == GLFW_PRESS)
+	{
+		Action ac;
+		ac._type = SHOOT;
+		actions.push_back(ac);
+	}
+	key_state = newstate;
+
+
 
 	//left click = 0
 	//right = 1
@@ -120,6 +156,10 @@ void Window::Input()
 		glfwGetCursorPos(window_ptr,&x,&y);
 		glm::vec2 mouse_position(x,y);
 	}
+
+
+	game->input(actions);
+	actions.clear();
 }
 
 void Window::Resize()

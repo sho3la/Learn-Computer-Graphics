@@ -58,3 +58,8 @@ void Sprite::scale(glm::vec2 _scale)
 {
 	rectangle->setscale(_scale);
 }
+
+glm::vec2 Sprite::getposition()
+{
+	return rectangle->getposition();
+}
