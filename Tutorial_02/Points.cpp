@@ -31,7 +31,7 @@ void Points::Draw()
 {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
-	glDrawArrays(GL_POINTS,0,points_list.size());
+	glDrawArrays(GL_POINTS,0,(int)points_list.size());
 }
 
 void Points::Update_GPU_Buffer()

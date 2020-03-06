@@ -31,7 +31,7 @@ void Lines::Draw()
 {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
-	glDrawArrays(GL_LINES,0,Lines_list.size());
+	glDrawArrays(GL_LINES,0,(int)Lines_list.size());
 }
 
 void Lines::Update_GPU_Buffer()
