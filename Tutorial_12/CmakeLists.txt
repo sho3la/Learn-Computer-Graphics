@@ -1,0 +1,118 @@
+cmake_minimum_required(VERSION 3.9)
+
+project("Tutorial_12")
+
+set(HEADER_FILES
+	Window.h
+	Rectangle.h
+	ShaderProgram.h
+	Camera.h
+	Texture.h
+	Sprite.h
+	Game.h
+	ShaderLibrary.h
+	Circle.h
+)
+
+set(SOURCE_FILES
+	main.cpp
+	
+	Window.cpp
+	Rectangle.cpp
+	ShaderProgram.cpp
+	Camera.cpp
+	Texture.cpp
+	Sprite.cpp
+	Game.cpp
+	ShaderLibrary.cpp
+	Circle.cpp
+)
+
+add_executable(Tutorial_12
+	${HEADER_FILES}
+	${SOURCE_FILES}
+)
+
+target_link_libraries(Tutorial_12
+	PUBLIC
+		opengl32
+		glew32
+		glfw3
+)
+
+if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+
+	add_custom_command(
+    TARGET Tutorial_12 POST_BUILD
+	
+	COMMAND ${CMAKE_COMMAND} -E copy 
+	${CMAKE_SOURCE_DIR}/external/glew/bin/x64/glew32.dll
+	$<TARGET_FILE_DIR:Tutorial_12>
+)
+else("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
+
+add_custom_command(
+    TARGET Tutorial_12 POST_BUILD
+	
+	COMMAND ${CMAKE_COMMAND} -E copy 
+	${CMAKE_SOURCE_DIR}/external/glew/bin/Win32/glew32.dll
+	$<TARGET_FILE_DIR:Tutorial_12>
+)
+
+ENDIF()
+
+
+# copy resources folder to exe folder
+add_custom_command(
+    TARGET Tutorial_12 POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:Tutorial_12>/resources
+)
+
+# copy resources folder to .sln folder
+add_custom_command(
+    TARGET Tutorial_12 POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${CMAKE_SOURCE_DIR}/resources ${PROJECT_BINARY_DIR}/resources
+)
+
+if(WIN32)
+	target_compile_definitions(Tutorial_12
+		PRIVATE
+			OS_WINDOWS=1
+	)
+	target_compile_options(Tutorial_12
+		PRIVATE
+			/WX
+	)
+endif(WIN32)
+
+
+target_compile_features(Tutorial_12 PUBLIC cxx_std_17)
+set_target_properties(Tutorial_12 PROPERTIES
+	CXX_EXTENSIONS OFF
+)
+
+target_include_directories(Tutorial_12
+	PUBLIC
+	${CMAKE_SOURCE_DIR}/external/glew/include
+	${CMAKE_SOURCE_DIR}/external/glfw/include
+	${CMAKE_SOURCE_DIR}/external/glm
+	${CMAKE_SOURCE_DIR}/external/stb
+)
+
+if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+
+	target_link_directories (Tutorial_12
+	PUBLIC
+	${CMAKE_SOURCE_DIR}/external/glew/lib/x64
+    ${CMAKE_SOURCE_DIR}/external/glfw/lib/$<CONFIG>/x64lib/
+)	
+else("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+
+	target_link_directories (Tutorial_12
+	PUBLIC
+	${CMAKE_SOURCE_DIR}/external/glew/lib/Win32
+	${CMAKE_SOURCE_DIR}/external/glfw/lib/$<CONFIG>/win32lib/
+)
+ENDIF()
