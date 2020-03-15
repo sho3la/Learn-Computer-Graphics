@@ -18,9 +18,9 @@ TODO List:
 - [x] Samplers shader GLSL.
 - [x] FileBrowser using win32 API & GLFW.
 - [x] Changing GLFW Icon.
-- [x] Axis-Aligned Collision Detection 2D.
-- [x] Draw Circles 2D.
-- [x] Circle-Circle Collision Detection 2D.
+- [ ] Axis-Aligned Collision Detection 2D.
+- [ ] Draw Circles 2D.
+- [ ] Circle-Circle Collision Detection 2D.
 - [ ] Separating Axis Theorem (SAT) Collision Detection 2D Rectangles.
 - [ ] Separating Axis Theorem (SAT) Collision Detection 2D Rectangle_Circle.
 - [ ] Font Rendering 2D.
