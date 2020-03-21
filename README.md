@@ -23,6 +23,7 @@ TODO List:
 - [x] Circle-Circle Collision Detection 2D.
 - [x] Separating Axis Theorem (SAT) Collision Detection 2D Rectangles.
 - [x] Separating Axis Theorem (SAT) Collision Detection 2D Rectangle_Circle.
+
 - [ ] Font Rendering 2D.
 - [ ] Sound Effects.
 - [ ] Sprite Animation 2D.
