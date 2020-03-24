@@ -46,7 +46,7 @@ Circle::Circle(glm::vec3 circ)
 
 	generate_circle(1,100,verts,colors);
 
-	num_verts = verts.size();
+	num_verts = (int)verts.size();
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

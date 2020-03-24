@@ -16,7 +16,7 @@ Window::Window(int width, int height)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_MAXIMIZED,true);
 
-	window_ptr = glfwCreateWindow(width, height, "Tutorial_13",NULL,NULL);
+	window_ptr = glfwCreateWindow(width, height, "Tutorial_14",NULL,NULL);
 	if(window_ptr ==  nullptr)
 	{
 		cout<<"erorr initilize glfw"<<endl;
