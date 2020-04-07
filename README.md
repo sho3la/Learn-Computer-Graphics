@@ -25,9 +25,7 @@ TODO List:
 - [x] Separating Axis Theorem (SAT) Collision Detection 2D Rectangle_Circle.
 - [x] Font Rendering 2D.
 - [x] Sound Effects.
-- [ ] Sprite Animation 2D.
+- [x] Sprite Animation 2D.
 - [ ] Checkboard shader 2D.
-- [ ] Win32 API ToolBar with GLFW.
 - [ ] Curves 2D.
 - [ ] Curve Editor Tool 2D.
-- [ ] Saving & Loading Data Tool.
