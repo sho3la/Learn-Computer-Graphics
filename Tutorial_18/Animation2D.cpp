@@ -78,14 +78,18 @@ void Animation2D::play(Texture & spritetexture, Rectangle & rectangle, double de
 	};
 
 	glBindVertexArray(rectangle.VAO);
-
 	glBindBuffer(GL_ARRAY_BUFFER, rectangle.UVBO);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(glm::vec2), &uv[0], GL_DYNAMIC_DRAW);
 
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, NULL);
+	/*{ //realocation for memory
+		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(glm::vec2), &uv[0], GL_DYNAMIC_DRAW);
+	}*/
 
 
+	// best practice to send data to gpu memory..
+	void* gpubuffer = nullptr;
+	gpubuffer = glMapBufferRange(GL_ARRAY_BUFFER, 0, 6 * sizeof(glm::vec2), GL_MAP_WRITE_BIT| GL_MAP_INVALIDATE_BUFFER_BIT);
+	memcpy(gpubuffer, uv.data(), 6 * sizeof(glm::vec2));
+	glUnmapBuffer(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
