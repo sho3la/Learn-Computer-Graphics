@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include <glew.h>
+
 Sprite::Sprite(const char * filename)
 {
 	auto tex_sys = TextureSystem::GetInstance();
@@ -30,8 +32,9 @@ void Sprite::draw(double deltatime, AnimationType type)
 		anims[type]->play(texture,rectangle,deltatime);
 	}
 
-	texture.use();
-	rectangle.draw();
+	glBindTexture(GL_TEXTURE_2D,texture.ID);
+	glBindVertexArray(rectangle.VAO);
+	glDrawArrays(GL_TRIANGLES,0,6);
 }
 
 void Sprite::Add_animation(const char * filename)

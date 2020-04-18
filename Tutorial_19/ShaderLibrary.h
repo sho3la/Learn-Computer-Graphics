@@ -16,8 +16,6 @@ public:
 
 	ShaderProgram* Colored_Shader();
 
-	ShaderProgram* Checkboard_Shader();
-
 private:
 
 	map<string,ShaderProgram*> programs;

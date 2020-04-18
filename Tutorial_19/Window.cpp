@@ -11,7 +11,7 @@ Window::Window(int width, int height)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_MAXIMIZED,true);
 
-	window_ptr = glfwCreateWindow(width, height, "Tutorial 19",NULL,NULL);
+	window_ptr = glfwCreateWindow(width, height, "Tutorial 18",NULL,NULL);
 	if(window_ptr ==  nullptr)
 	{
 		cout<<"erorr initilize glfw"<<endl;
@@ -36,12 +36,14 @@ Window::Window(int width, int height)
 	Shaders = make_unique<ShaderLibrary>();
 	camera = make_unique<Camera>(0,0);
 
-	auto rect_sys = RectangleSystem::GetInstance();
-	rect = rect_sys->Generate();
+	//sp = new Sprite("resources/spaceship.png");
+
+	player = new Player();
 }
 
 Window::~Window()
 {
+	delete player;
 	glfwTerminate();
 }
 
@@ -54,12 +56,15 @@ void Window::Input()
 
 	if(glfwGetKey(window_ptr,GLFW_KEY_RIGHT))
 	{
+		player->move_right();
 	}
 	else if (glfwGetKey(window_ptr, GLFW_KEY_LEFT))
 	{
+		player->move_left();
 	}
 	else
 	{
+		player->stop();
 	}
 
 }
@@ -92,11 +97,11 @@ void Window::Mainloop()
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		// all drawing goes here ..
-		Shaders->Checkboard_Shader()->use();
-		Shaders->Checkboard_Shader()->Send_Mat4("projection", camera->Get_Projection());
-		Shaders->Checkboard_Shader()->Send_Mat4("model_matrx", glm::scale(glm::mat4(1), glm::vec3(m_width,m_height,1)));
-		Shaders->Checkboard_Shader()->Send_vec2("resolution", glm::vec2(m_width,m_height));
-		rect.draw();
+		Shaders->Textured_Shader()->use();
+		Shaders->Textured_Shader()->Send_Mat4("projection", camera->Get_Projection());
+
+		Shaders->Textured_Shader()->Send_Mat4("model_matrx", player->Transformation());
+		player->draw(delta);
 			
 		glfwSwapBuffers(window_ptr);
 		glfwPollEvents();

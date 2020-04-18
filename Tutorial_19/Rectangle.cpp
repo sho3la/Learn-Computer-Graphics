@@ -91,11 +91,3 @@ void RectangleSystem::Delete(Rectangle & obj)
 RectangleSystem::RectangleSystem()
 {
 }
-
-
-// rectangle draw
-void Rectangle::draw()
-{
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES,0,6);
-}

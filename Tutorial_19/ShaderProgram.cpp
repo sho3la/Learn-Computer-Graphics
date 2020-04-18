@@ -48,12 +48,6 @@ void ShaderProgram::Send_Mat4(const char * name, glm::mat4& mat)
 	glUniformMatrix4fv(location,1,GL_FALSE,&mat[0][0]);
 }
 
-void ShaderProgram::Send_vec2(const char * name, glm::vec2 & val)
-{
-	auto location = glGetUniformLocation(ID,name);
-	glUniform2fv(location,1,&val[0]);
-}
-
 void ShaderProgram::checkerorr(unsigned int shader_id, std::string type)
 {
 	int success;

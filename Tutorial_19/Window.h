@@ -25,7 +25,7 @@ public:
 
 	void Mainloop();
 
-	Rectangle rect;
+	Player* player;
 
 private:
 	int m_width,m_height;

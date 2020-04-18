@@ -66,9 +66,3 @@ TextureSystem::TextureSystem()
 {
 
 }
-
-// texture use
-void Texture::use()
-{
-	glBindTexture(GL_TEXTURE_2D,ID);
-}

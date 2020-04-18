@@ -8,8 +8,6 @@ struct Rectangle
 	unsigned int VBO;  // vertex buffer object
 	unsigned int CBO;  // color buffer object
 	unsigned int UVBO; // uv buffer object
-
-	void draw();
 };
 
 class RectangleSystem

@@ -7,8 +7,6 @@ struct Texture
 	int width;
 	int height;
 	unsigned int ID;
-
-	void use();
 };
 
 class TextureSystem
