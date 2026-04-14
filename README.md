@@ -3,6 +3,8 @@ some tutorials for opengl c++ and Qt
 
 [**Visit YOUTUBE Channel.**](https://www.youtube.com/playlist?list=PLpj3stwSVSaphSt33SHbQbEnaejAtlYxs)<br>
 
+[**Check out the New Vulkan API Examples Repository.**](https://github.com/sho3la/vk-examples)<br>
+
 TODO List:
 - [x] Intorduction.
 - [x] Learn CMAKE and GIT.
